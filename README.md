@@ -4,7 +4,7 @@
 
 ## unittest 
 
-** 自动生成单元测试
+- 自动生成单元测试
 ** 对于DAO层，使用mybatis开发，用test4j框架进行测试，并适当检测下SQL的性能
 ** 对于Service层，使用Jmockit框架进行测试 
 ** 对于Controller层，使用集成测试，并对接口性能提供分析报告
