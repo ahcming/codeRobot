@@ -7,9 +7,12 @@ import org.testng.annotations.Test;
 
 public class AstUtilsTest {
 
+	private String javaFile = "/home/chenming/ws-plugin/codeRobot/common/src/test/java/cm/study/robot/common/XXXService.java";
+	
 	@Test
-	public void main() throws Exception {
-		throw new RuntimeException( "not yet implemented" );
+	public void AstUtils() throws Exception {
+		AstUtils.build( javaFile ).scan();
 	}
+
 
 }
