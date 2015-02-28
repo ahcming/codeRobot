@@ -11,7 +11,8 @@ public class AstUtilsTest {
 	
 	@Test
 	public void AstUtils() throws Exception {
-		AstUtils.build( javaFile ).scan();
+		AstUtils.init( javaFile ).codeRobot( AstUtils.SERVICE ).scan().generate();
+//		AstUtils.init( javaFile ).scan();
 	}
 
 
