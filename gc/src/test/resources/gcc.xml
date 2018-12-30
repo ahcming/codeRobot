@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE config
+        PUBLIC "-//ahcming.kit//DTD Code Generator Configuration 1.0//ZH"
+        "generator-config_1_0.dtd">
+
+<config>
+    <project>
+        <mapper.interface.path>src/main/java/ahcming/kit</mapper.interface.path>
+        <mapper.xml.path>src/main/resources/ahcming/kit</mapper.xml.path>
+    </project>
+
+    <!-- 存储层配置 -->
+    <storage>
+        <!-- 所有数据库 -->
+        <scheme
+                id="dy_ad"
+                driver="com.mysql.jdbc.Driver"
+                driver_jar="/Users/ahcming/.m2/repository/mysql/mysql-connector-java/6.0.6/mysql-connector-java-6.0.6.jar"
+                url="jdbc:mysql://123.56.8.153:3306/new_world?nullNamePatternMatchesAll=true"
+                type="mysql"
+                user="dy_ad"
+                password="NTkwZWI2NGIwMDMw"
+                remark="广告数据库"
+        />
+
+    </storage>
+
+    <domain>
+        <!-- 每个实体配置 -->
+        <entity id="dy_ad-dsp_plan" scheme="dy_ad" remark="广告计划" engine="InnoDB" charset="UTF-8">
+            <!-- 表与类的映射关系 -->
+            <mapper table="dsp_plan" bean="com.dy.model.ad.DspPlan" >
+                <property column="id"           jdbcType="int"                              name="id"           javaType="int"      remark="主键ID" />
+                <property column="sponsor"      jdbcType="bigint"                           name="sponsor"      javaType="long"     remark="广告主ID" />
+                <property column="name"         jdbcType="varchar"      length="32"         name="name"         javaType="String"   remark="计划名称" />
+                <property column="status"       jdbcType="smallint"                         name="status"       javaType="int"      remark="1:启用, 2:下线" />
+                <property column="time_type"    jdbcType="smallint"                         name="timeType"     javaType="int"      remark="时间类型, 1: 从A到B, 2: 每天的从A到B" />
+                <property column="start_time"   jdbcType="varchar"      length="20"         name="startTime"    javaType="String"   remark="投放开始时间" />
+                <property column="end_time"     jdbcType="varchar"      length="20"         name="endTime"      javaType="String"   remark="投放结束时间" />
+                <property column="budget"       jdbcType="int"                              name="budget"       javaType="int"      remark="每日预算" />
+                <property column="expose_limit" jdbcType="int"                              name="exposeLimit"  javaType="int"      remark="每日曝光上限" />
+                <property column="modify_time"  jdbcType="datetime"                         name="modifyTime"   javaType="Date"     remark="主键ID" />
+            </mapper>
+
+            <!-- 索引相关配置 -->
+            <indexs>
+                <index name="master_key" type="PRIMARY" cloumns="id"></index>
+                <index name="idx_sponsor" type="INDEX" cloumns="sponsor"/>
+                <index name="udx_name_status" type="UNIQUE" cloumns="name,status"/>
+            </indexs>
+
+            <!-- 分表操作, 默认是null, 不分表 -->
+            <sharding number="128" type="table" hash="hash(sponsor)%128" />
+        </entity>
+    </domain>
+
+    <gc>
+        <generator id="dsp_plan-sql" entity="dy_ad-dsp_plan" task="sql" status="active" />
+        <generator id="dsp_plan-dao" entity="dy_ad-dsp_plan" task="dao" status="active" />
+        <generator id="dsp_plan-api" entity="dy_ad-dsp_plan" task="api" status="active" />
+        <generator id="dsp_plan-manage" entity="dy_ad-dsp_plan" task="manage" status="active" />
+    </gc>
+
+</config>

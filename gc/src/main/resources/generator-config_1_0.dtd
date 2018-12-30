@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!ELEMENT config (project?, storage+, domain+, gc+)>
+
+<!ELEMENT project (mapper.interface.path, mapper.xml.path)>
+    <!ELEMENT mapper.interface.path (#PCDATA)>
+    <!ELEMENT mapper.xml.path (#PCDATA)>
+
+<!-- 项目存储层配置 -->
+<!ELEMENT storage (scheme*)>
+    <!-- 数据存储scheme配置, 可能是mysql, oracle或是PostgreSql -->
+    <!ELEMENT scheme EMPTY>
+    <!ATTLIST scheme
+            id ID #REQUIRED
+            driver CDATA #REQUIRED
+            driver_jar CDATA #REQUIRED
+            type (mysql|oracle|pg) "mysql"
+            url CDATA #REQUIRED
+            user CDATA #REQUIRED
+            password CDATA #IMPLIED
+            remark CDATA #IMPLIED
+            >
+
+<!ELEMENT domain (entity*)>
+    <!ELEMENT entity (mapper?, indexs?, sharding?)>
+        <!ELEMENT mapper (property*)>
+            <!ELEMENT property EMPTY>
+            <!ATTLIST property
+                    column  CDATA #REQUIRED
+                    jdbcType (int|smallint|bigint|datetime|varchar) #REQUIRED
+                    length CDATA #IMPLIED
+                    name CDATA #REQUIRED
+                    javaType (int|long|String|Date) #REQUIRED
+                    remark CDATA #REQUIRED
+                    >
+        <!ATTLIST mapper
+                table CDATA #REQUIRED
+                bean CDATA #REQUIRED
+                >
+
+        <!ELEMENT indexs (index*)>
+            <!ELEMENT index EMPTY>
+            <!ATTLIST index
+                    name CDATA #REQUIRED
+                    type (PRIMARY|INDEX|UNIQUE) #REQUIRED
+                    cloumns CDATA #REQUIRED
+                    >
+
+        <!ELEMENT sharding EMPTY>
+        <!ATTLIST sharding
+                number CDATA #REQUIRED
+                type (table|db) #REQUIRED
+                hash CDATA #REQUIRED
+                >
+    <!ATTLIST entity
+            id ID #REQUIRED
+            scheme IDREF #REQUIRED
+            remark CDATA #IMPLIED
+            engine (InnoDB|MyISAM) "InnoDB"
+            charset (UTF-8|GB2312|ISO-8859-1) "UTF-8"
+            >
+
+<!ELEMENT gc (generator*)>
+    <!ELEMENT generator EMPTY>
+    <!ATTLIST generator
+            id ID #IMPLIED
+            entity IDREF #REQUIRED
+            task (sql|dao|api|manage) "sql"
+            status (active|complete) "active"
+            >
