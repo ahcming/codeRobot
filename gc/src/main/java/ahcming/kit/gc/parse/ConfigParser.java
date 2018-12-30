@@ -7,6 +7,7 @@ import ahcming.kit.gc.model.Project;
 import ahcming.kit.gc.model.Storage;
 import ahcming.kit.gc.xml.ParserEntityResolver;
 import ahcming.kit.gc.xml.ParserErrorHandler;
+import org.apache.maven.plugin.logging.Log;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -39,7 +40,7 @@ public class ConfigParser {
         this.configPath = configPath;
     }
 
-    public void parse() {
+    public void parse(Log log) {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         factory.setValidating(true);
 
@@ -58,8 +59,21 @@ public class ConfigParser {
             _parseDomain(rootNode);
             _parseGc(rootNode);
 
+            if (warnings.size() > 0) {
+                for (String warn : warnings) {
+                    log.warn(warn);
+                }
+            }
+
+            if (parseErrors.size() > 0) {
+                for (String error : parseErrors) {
+                    log.error(error);
+                }
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
+            log.error("parse gc config exception:", e);
         }
     }
 

@@ -31,7 +31,7 @@
                     length CDATA #IMPLIED
                     name CDATA #REQUIRED
                     javaType (int|long|String|Date) #REQUIRED
-                    remark CDATA #REQUIRED
+                    remark CDATA #IMPLIED
                     >
         <!ATTLIST mapper
                 table CDATA #REQUIRED
@@ -41,8 +41,8 @@
         <!ELEMENT indexs (index*)>
             <!ELEMENT index EMPTY>
             <!ATTLIST index
-                    name CDATA #REQUIRED
-                    type (PRIMARY|INDEX|UNIQUE) #REQUIRED
+                    name CDATA #IMPLIED
+                    type (PRIMARY|INDEX|UNIQUE) "INDEX"
                     cloumns CDATA #REQUIRED
                     >
 

@@ -1,5 +1,6 @@
 package ahcming.kit.gc;
 
+import ahcming.kit.gc.parse.ConfigParser;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
@@ -13,9 +14,13 @@ public class GenCodeMojo extends AbstractMojo {
 
     @Override
     public void execute() {
-        getLog().warn("-------- GC start --------");
+        getLog().warn("############# GC start #############");
+
         getLog().info("Config path:" + gcc);
-        getLog().warn("-------- GC end --------");
+        ConfigParser parser = new ConfigParser(gcc);
+        parser.parse(getLog());
+
+        getLog().warn("$$$$$$$$$$$$$ GC   end $$$$$$$$$$$$$");
 
     }
 }

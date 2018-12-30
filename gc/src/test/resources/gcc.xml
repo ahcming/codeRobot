@@ -39,7 +39,7 @@
                 <property column="end_time"     jdbcType="varchar"      length="20"         name="endTime"      javaType="String"   remark="投放结束时间" />
                 <property column="budget"       jdbcType="int"                              name="budget"       javaType="int"      remark="每日预算" />
                 <property column="expose_limit" jdbcType="int"                              name="exposeLimit"  javaType="int"      remark="每日曝光上限" />
-                <property column="modify_time"  jdbcType="datetime"                         name="modifyTime"   javaType="Date"     remark="主键ID" />
+                <property column="modify_time"  jdbcType="datetime"                         name="modifyTime"   javaType="Date"      />
             </mapper>
 
             <!-- 索引相关配置 -->
@@ -50,7 +50,7 @@
             </indexs>
 
             <!-- 分表操作, 默认是null, 不分表 -->
-            <sharding number="128" type="table" hash="hash(sponsor)%128" />
+            <sharding number="4" type="table" hash="hash(sponsor)%128" />
         </entity>
     </domain>
 
